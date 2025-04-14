@@ -1,4 +1,10 @@
 // const express = require('express')
+import "dotenv/config";
+
+import mongoose from "mongoose";
+
+import "dotenv/config";
+
 import express from 'express';
 import Hello from "./Hello.js"
 import Lab5 from "./Lab5/index.js";
@@ -11,27 +17,28 @@ import AssignmentRoutes from "./Kambaz/Assignments/routes.js";
 import EnrollmentsRoutes from "./Kambaz/Enrollments/routes.js";
 
 
-
-import "dotenv/config";
 import session from "express-session";
 
+const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kambaz"
+// const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING
+mongoose.connect(CONNECTION_STRING);
 
 const app = express()
 
 // Configure CORS to support cookies and restrict network access
-// app.use(
-//     cors({
-//         credentials: true,
-//         origin: process.env.NETLIFY_URL || "http://localhost:5173",
-//     })
-// );
+app.use(
+    cors({
+        credentials: true,
+        origin: process.env.NETLIFY_URL || "http://localhost:5173",
+    })
+);
 
-//手动了 manually configure CORS
-const allowedOrigins = [
-    "http://localhost:5173",
-    "https://gloria-react-web-app-cs5610-sp25.netlify.app",
-    "https://a5--gloria-react-web-app-cs5610-sp25.netlify.app"
-];
+// //手动了 manually configure CORS
+// const allowedOrigins = [
+//     "http://localhost:5173",
+//     "https://gloria-react-web-app-cs5610-sp25.netlify.app",
+//     "https://a5--gloria-react-web-app-cs5610-sp25.netlify.app"
+// ];
 
 app.use(
     cors({
@@ -59,7 +66,7 @@ if (process.env.NODE_ENV !== "development") {
     sessionOptions.cookie = {
         sameSite: "none",
         secure: true,
-        // domain: process.env.NODE_SERVER_DOMAIN,
+        domain: process.env.NODE_SERVER_DOMAIN,
     };
 }
 
