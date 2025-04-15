@@ -1,91 +1,26 @@
-// const express = require('express')
-import "dotenv/config";
-
+// ==== index.js ====
+import express from "express";
+import cors from "cors";
+import session from "express-session";
 import mongoose from "mongoose";
 
-import "dotenv/config";
-
-import express from 'express';
-import Hello from "./Hello.js"
-import Lab5 from "./Lab5/index.js";
-import cors from "cors";
-
 import UserRoutes from "./Kambaz/Users/routes.js";
-import CourseRoutes from "./Kambaz/Courses/routes.js";
-import ModuleRoutes from "./Kambaz/Modules/routes.js";
-import AssignmentRoutes from "./Kambaz/Assignments/routes.js";
-import EnrollmentsRoutes from "./Kambaz/Enrollments/routes.js";
+import QuizRoutes from "./Kambaz/Quizzes/routes.js";
 
-
-import session from "express-session";
-
-const CONNECTION_STRING = "mongodb://127.0.0.1:27017/kambaz"
-// const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING
-mongoose.connect(CONNECTION_STRING);
-
-const app = express()
-
-// Configure CORS to support cookies and restrict network access
-app.use(
-    cors({
-        credentials: true,
-        origin: process.env.NETLIFY_URL || "http://localhost:5173",
-    })
-);
-
-// //手动了 manually configure CORS
-// const allowedOrigins = [
-//     "http://localhost:5173",
-//     "https://gloria-react-web-app-cs5610-sp25.netlify.app",
-//     "https://a5--gloria-react-web-app-cs5610-sp25.netlify.app"
-// ];
-
-app.use(
-    cors({
-        credentials: true,
-        origin: function (origin, callback) {
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        }
-    })
-);
-
-
-//  Configuring Server Sessions
-const sessionOptions = {
-    secret: process.env.SESSION_SECRET || "kambaz",
+const app = express();
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(express.json());
+app.use(session({
+    secret: "kambaz-secret",
     resave: false,
     saveUninitialized: false,
-};
+}));
 
-if (process.env.NODE_ENV !== "development") {
-    sessionOptions.proxy = true;
-    sessionOptions.cookie = {
-        sameSite: "none",
-        secure: true,
-        domain: process.env.NODE_SERVER_DOMAIN,
-    };
-}
+mongoose.connect("mongodb://127.0.0.1:27017/demo-data-final-project");
 
-app.use(session(sessionOptions));
-
-app.use(express.json())
-
-
-// Lab5
-Lab5(app);
-Hello(app)
-
-// Kambaz
 UserRoutes(app);
-CourseRoutes(app);
-ModuleRoutes(app);
-AssignmentRoutes(app);
-EnrollmentsRoutes(app);
+QuizRoutes(app);
 
-
-
-app.listen(process.env.PORT || 4000)
+app.listen(4000, () => {
+    console.log("Server running on http://localhost:4000");
+});
