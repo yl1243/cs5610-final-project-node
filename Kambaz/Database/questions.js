@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 const QuestionSchema = new mongoose.Schema(
   {
+    // Custom _id field using UUID
+    _id: {
+      type: String,
+      default: uuidv4,
+    },
     // Link to the parent quiz (each quiz can have many questions)
     quizId: {
       type: String,
