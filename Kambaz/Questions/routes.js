@@ -8,6 +8,7 @@ import {
   getQuestionsForQuiz,
   updateQuestion,
   deleteQuestion,
+  countQuestionsForQuiz,
 } from "./dao.js";
 
 const router = express.Router();
@@ -110,6 +111,19 @@ router.post("/api/questions/fill-in-blank", async (req, res) => {
     const question = await createFillInBlankQuestion(data);
     res.status(201).json(question);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//GET /api/quizzes/:quizId/questions/count
+//Retrieve the count of questions for a particular quiz.
+router.get("/api/quizzes/:quizId/questions/count", async (req, res) => {
+  try {
+    const { quizId } = req.params;
+    const count = await countQuestionsForQuiz(quizId);
+    res.json({ count });
+  } catch (error) {
+    console.error("Error fetching question count:", error);
     res.status(500).json({ error: error.message });
   }
 });

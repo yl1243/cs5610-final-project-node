@@ -87,3 +87,11 @@ export async function deleteQuestion(questionId) {
     throw new Error(`Error deleting question: ${error.message}`);
   }
 }
+// Count questions for a given quiz
+export async function countQuestionsForQuiz(quizId) {
+  try {
+    return await Question.countDocuments({ quizId });
+  } catch (error) {
+    throw new Error(`Error counting questions for quiz: ${error.message}`);
+  }
+}
