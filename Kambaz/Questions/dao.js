@@ -15,9 +15,13 @@ export async function createQuestion(data) {
 // Create a multiple choice question
 export async function createMultipleChoiceQuestion(data) {
   try {
-    // Force the question type to multiple-choice
+    // Force the question type
     data.questionType = "multiple-choice";
+    delete data.correctAnswer;
+    delete data.answers;
     const question = new Question(data);
+    question.correctAnswer = undefined;
+    question.answers = [];
     await question.save();
     return question;
   } catch (error) {
@@ -30,9 +34,14 @@ export async function createMultipleChoiceQuestion(data) {
 // Create a true/false question
 export async function createTrueFalseQuestion(data) {
   try {
-    // Force the question type to true-false
     data.questionType = "true-false";
+    // remove irrelevant fields
+    delete data.choices;
+    delete data.answers;
     const question = new Question(data);
+    // ensure no stray fields
+    question.choices = [];
+    question.answers = [];
     await question.save();
     return question;
   } catch (error) {
@@ -43,9 +52,14 @@ export async function createTrueFalseQuestion(data) {
 // Create a fill-in-blank question
 export async function createFillInBlankQuestion(data) {
   try {
-    // Force the question type to fill-in-blank
     data.questionType = "fill-in-blank";
+    // remove irrelevant fields
+    delete data.choices;
+    delete data.correctAnswer;
     const question = new Question(data);
+    // ensure no stray fields
+    question.choices = [];
+    question.correctAnswer = undefined;
     await question.save();
     return question;
   } catch (error) {
@@ -71,16 +85,16 @@ export async function getQuestionsForQuiz(quizId) {
   }
 }
 
-// Update a question by its ID
+// Add auto‑removing irrelevant fields for the current questionType.
+// mongoDB always returns the fields, even if they are not relevant and not created, disgusting
 export async function updateQuestion(questionId, data) {
   try {
-    // Load the existing document
+    // 1) Load the existing document
     const question = await Question.findById(questionId);
     if (!question) {
       return null;
     }
-
-    // Overwrite simple fields if provided
+    // 2) Overwrite simple fields if provided
     const updatableFields = [
       "title",
       "points",
@@ -95,15 +109,22 @@ export async function updateQuestion(questionId, data) {
         question[field] = data[field];
       }
     });
-
-    // possibleAnswers array
+    // 3) Merge possibleAnswers, preserving or generating each id
     if (Array.isArray(data.possibleAnswers)) {
       question.possibleAnswers = data.possibleAnswers.map((ans) => ({
-        // reuse incoming id or generate a new one
         id: ans.id || uuidv4(),
         value: ans.value ?? "",
       }));
     }
+    // If this is NOT a true-false question, remove any correctAnswer
+    if (question.questionType !== "true-false") {
+      question.correctAnswer = undefined;
+    }
+    // If this is NOT a fill-in-blank question, clear any answers array
+    if (question.questionType !== "fill-in-blank") {
+      question.answers = [];
+    }
+    // 4) Save & return
     await question.save();
     return question;
   } catch (error) {

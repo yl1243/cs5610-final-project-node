@@ -7,9 +7,9 @@
     "questionText": "1 + 1 = ?",
     "questionType": "multiple-choice",
     "choices": [
-      { "text": "2", "isCorrect": true },
-      { "text": "3", "isCorrect": false },
-      { "text": "4", "isCorrect": false }
+      { "id": "QQ101-ch1", "text": "2", "isCorrect": true },
+      { "id": "QQ101-ch2", "text": "3", "isCorrect": false },
+      { "id": "QQ101-ch3", "text": "4", "isCorrect": false }
     ],
     "possibleAnswers": [
       { "id": "QQ101-ans1", "value": "2" },
@@ -24,7 +24,7 @@
     "points": 4,
     "questionText": "A rocket engine works by pushing exhaust backward.",
     "questionType": "true-false",
-    "correctAnswer": true,
+    "correctAnswer": { "id": "QQ102-correct", "value": true },
     "possibleAnswers": [
       { "id": "QQ102-ans1", "value": "True" },
       { "id": "QQ102-ans2", "value": "False" }
@@ -38,9 +38,9 @@
     "questionText": "Which fuel type is commonly used in rocket engines?",
     "questionType": "multiple-choice",
     "choices": [
-      { "text": "Hydrogen", "isCorrect": true },
-      { "text": "Diesel", "isCorrect": false },
-      { "text": "Coal", "isCorrect": false }
+      { "id": "QQ103-ch1", "text": "Hydrogen", "isCorrect": true },
+      { "id": "QQ103-ch2", "text": "Diesel", "isCorrect": false },
+      { "id": "QQ103-ch3", "text": "Coal", "isCorrect": false }
     ],
     "possibleAnswers": [
       { "id": "QQ103-ans1", "value": "Hydrogen" },
@@ -56,9 +56,9 @@
     "questionText": "What is the function of a nozzle in a rocket engine?",
     "questionType": "multiple-choice",
     "choices": [
-      { "text": "Increase thrust", "isCorrect": true },
-      { "text": "Decrease velocity", "isCorrect": false },
-      { "text": "Store fuel", "isCorrect": false }
+      { "id": "QQ104-ch1", "text": "Increase thrust", "isCorrect": true },
+      { "id": "QQ104-ch2", "text": "Decrease velocity", "isCorrect": false },
+      { "id": "QQ104-ch3", "text": "Store fuel", "isCorrect": false }
     ],
     "possibleAnswers": [
       { "id": "QQ104-ans1", "value": "Increase thrust" },
@@ -73,7 +73,7 @@
     "points": 4,
     "questionText": "Higher airspeed reduces pressure over an airfoil.",
     "questionType": "true-false",
-    "correctAnswer": true,
+    "correctAnswer": { "id": "QQ105-correct", "value": true },
     "possibleAnswers": [
       { "id": "QQ105-ans1", "value": "True" },
       { "id": "QQ105-ans2", "value": "False" }
@@ -87,9 +87,9 @@
     "questionText": "Which equation governs incompressible fluid flow?",
     "questionType": "multiple-choice",
     "choices": [
-      { "text": "Bernoulli's Equation", "isCorrect": true },
-      { "text": "Newton's Law", "isCorrect": false },
-      { "text": "Euler's Formula", "isCorrect": false }
+      { "id": "QQ106-ch1", "text": "Bernoulli's Equation", "isCorrect": true },
+      { "id": "QQ106-ch2", "text": "Newton's Law", "isCorrect": false },
+      { "id": "QQ106-ch3", "text": "Euler's Formula", "isCorrect": false }
     ],
     "possibleAnswers": [
       { "id": "QQ106-ans1", "value": "Bernoulli's Equation" },
@@ -104,7 +104,7 @@
     "points": 5,
     "questionText": "Conduction is the primary mode of heat transfer in a vacuum.",
     "questionType": "true-false",
-    "correctAnswer": false,
+    "correctAnswer": { "id": "QQ107-correct", "value": false },
     "possibleAnswers": [
       { "id": "QQ107-ans1", "value": "True" },
       { "id": "QQ107-ans2", "value": "False" }
@@ -118,9 +118,9 @@
     "questionText": "What property measures a material's ability to resist deformation?",
     "questionType": "multiple-choice",
     "choices": [
-      { "text": "Elasticity", "isCorrect": true },
-      { "text": "Density", "isCorrect": false },
-      { "text": "Mass", "isCorrect": false }
+      { "id": "QQ108-ch1", "text": "Elasticity", "isCorrect": true },
+      { "id": "QQ108-ch2", "text": "Density", "isCorrect": false },
+      { "id": "QQ108-ch3", "text": "Mass", "isCorrect": false }
     ],
     "possibleAnswers": [
       { "id": "QQ108-ans1", "value": "Elasticity" },
@@ -136,9 +136,9 @@
     "questionText": "What is the minimum velocity required for an object to remain in orbit around Earth?",
     "questionType": "multiple-choice",
     "choices": [
-      { "text": "7.8 km/s", "isCorrect": true },
-      { "text": "9.8 km/s", "isCorrect": false },
-      { "text": "11.2 km/s", "isCorrect": false }
+      { "id": "QQ109-ch1", "text": "7.8 km/s", "isCorrect": true },
+      { "id": "QQ109-ch2", "text": "9.8 km/s", "isCorrect": false },
+      { "id": "QQ109-ch3", "text": "11.2 km/s", "isCorrect": false }
     ],
     "possibleAnswers": [
       { "id": "QQ109-ans1", "value": "7.8 km/s" },
@@ -153,7 +153,7 @@
     "points": 8,
     "questionText": "Systems engineering focuses on integrating different components into a functional whole.",
     "questionType": "true-false",
-    "correctAnswer": true,
+    "correctAnswer": { "id": "QQ110-correct", "value": true },
     "possibleAnswers": [
       { "id": "QQ110-ans1", "value": "True" },
       { "id": "QQ110-ans2", "value": "False" }
@@ -167,9 +167,9 @@
     "questionText": "The thrust force of a rocket is given by the equation T = _____",
     "questionType": "fill-in-blank",
     "answers": [
-      "mdot * v + (p2 - p1) * A",
-      "m. * v + (p2 - p1) * A",
-      "mdot * v + A * (p2 - p1)"
+      { "id": "QQ111-ans1", "value": "mdot * v + (p2 - p1) * A" },
+      { "id": "QQ111-ans2", "value": "m. * v + (p2 - p1) * A" },
+      { "id": "QQ111-ans3", "value": "mdot * v + A * (p2 - p1)" }
     ],
     "possibleAnswers": [
       { "id": "QQ111-ans1", "value": "mdot * v + (p2 - p1) * A" },
@@ -184,7 +184,10 @@
     "points": 5,
     "questionText": "The first law of thermodynamics states that energy cannot be ___________",
     "questionType": "fill-in-blank",
-    "answers": ["created or destroyed", "Created Or Destroyed"],
+    "answers": [
+      { "id": "QQ112-ans1", "value": "created or destroyed" },
+      { "id": "QQ112-ans2", "value": "Created Or Destroyed" }
+    ],
     "possibleAnswers": [
       { "id": "QQ112-ans1", "value": "created or destroyed" },
       { "id": "QQ112-ans2", "value": "Created Or Destroyed" }

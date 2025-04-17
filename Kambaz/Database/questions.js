@@ -3,46 +3,60 @@ import { v4 as uuidv4 } from "uuid";
 
 const QuestionSchema = new mongoose.Schema(
   {
-    // Custom _id field using UUID
+    // Use UUID for the question’s primary key
     _id: {
       type: String,
       default: uuidv4,
     },
-    // Link to the parent quiz (each quiz can have many questions)
+
+    // Parent quiz reference
     quizId: {
       type: String,
       ref: "Quiz",
       required: true,
     },
+
     title: {
       type: String,
       required: true,
     },
+
     points: {
       type: Number,
       default: 1,
     },
+
     questionText: {
       type: String,
       required: true,
     },
+
     questionType: {
       type: String,
       enum: ["multiple-choice", "true-false", "fill-in-blank"],
       required: true,
     },
-    // For multiple choice questions:
+
+    // Multiple-choice options
     choices: [
       {
-        _id: false, // disable Mongoose ObjectId
+        _id: false, // disable Mongo’s ObjectId
         id: {
           type: String,
-          default: uuidv4,
+          default: uuidv4, // your UUID string
         },
-        text: { type: String },
-        isCorrect: { type: Boolean, default: false },
+        text: {
+          type: String,
+          required: true,
+        },
+        isCorrect: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
+
+    // True/false answer — only required when questionType is 'true-false'
     correctAnswer: {
       _id: false,
       id: {
@@ -51,10 +65,13 @@ const QuestionSchema = new mongoose.Schema(
       },
       value: {
         type: Boolean,
-        required: true,
+        required: function () {
+          return this.questionType === "true-false";
+        },
       },
     },
-    // For fill-in-the-blank questions:
+
+    // Fill-in-the-blank answers — must have at least one when questionType is 'fill-in-blank'
     answers: {
       type: [
         {
@@ -70,29 +87,33 @@ const QuestionSchema = new mongoose.Schema(
         },
       ],
       default: [],
-    },
-    // For question editing:
-    possibleAnswers: {
-      type: [
-        {
-          //disable Mongoose auto‐id on each subdoc
-          _id: false,
-          id: {
-            type: String,
-            default: uuidv4,
-          },
-          value: {
-            type: String,
-            default: "",
-          },
+      validate: {
+        validator: function (arr) {
+          if (this.questionType === "fill-in-blank") {
+            return Array.isArray(arr) && arr.length > 0;
+          }
+          return true;
         },
-      ],
-      default: [],
+        message: "fill-in-blank questions need at least one answer",
+      },
     },
+
+    // Editor-only possible answers
+    possibleAnswers: [
+      {
+        _id: false,
+        id: {
+          type: String,
+          default: uuidv4,
+        },
+        value: {
+          type: String,
+          default: "",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
 
-const Question = mongoose.model("Question", QuestionSchema);
-
-export default Question;
+export default mongoose.model("Question", QuestionSchema);
