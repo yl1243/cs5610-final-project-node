@@ -43,16 +43,34 @@ const QuestionSchema = new mongoose.Schema(
         isCorrect: { type: Boolean, default: false },
       },
     ],
-    // For true/false questions:
     correctAnswer: {
-      type: Boolean,
+      _id: false,
+      id: {
+        type: String,
+        default: uuidv4,
+      },
+      value: {
+        type: Boolean,
+        required: true,
+      },
     },
     // For fill-in-the-blank questions:
-    answers: [
-      {
-        type: String,
-      },
-    ],
+    answers: {
+      type: [
+        {
+          _id: false,
+          id: {
+            type: String,
+            default: uuidv4,
+          },
+          value: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+      default: [],
+    },
     // For question editing:
     possibleAnswers: {
       type: [
