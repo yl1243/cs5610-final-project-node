@@ -34,6 +34,11 @@ const QuestionSchema = new mongoose.Schema(
     // For multiple choice questions:
     choices: [
       {
+        _id: false, // disable Mongoose ObjectId
+        id: {
+          type: String,
+          default: uuidv4,
+        },
         text: { type: String },
         isCorrect: { type: Boolean, default: false },
       },
@@ -48,6 +53,24 @@ const QuestionSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    // For question editing:
+    possibleAnswers: {
+      type: [
+        {
+          //disable Mongoose auto‐id on each subdoc
+          _id: false,
+          id: {
+            type: String,
+            default: uuidv4,
+          },
+          value: {
+            type: String,
+            default: "",
+          },
+        },
+      ],
+      default: [],
+    },
   },
   { timestamps: true }
 );

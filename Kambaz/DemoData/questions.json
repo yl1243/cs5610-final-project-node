@@ -10,6 +10,11 @@
       { "text": "2", "isCorrect": true },
       { "text": "3", "isCorrect": false },
       { "text": "4", "isCorrect": false }
+    ],
+    "possibleAnswers": [
+      { "id": "QQ101-ans1", "value": "2" },
+      { "id": "QQ101-ans2", "value": "3" },
+      { "id": "QQ101-ans3", "value": "4" }
     ]
   },
   {
@@ -19,7 +24,11 @@
     "points": 4,
     "questionText": "A rocket engine works by pushing exhaust backward.",
     "questionType": "true-false",
-    "correctAnswer": true
+    "correctAnswer": true,
+    "possibleAnswers": [
+      { "id": "QQ102-ans1", "value": "True" },
+      { "id": "QQ102-ans2", "value": "False" }
+    ]
   },
   {
     "_id": "QQ103",
@@ -32,6 +41,11 @@
       { "text": "Hydrogen", "isCorrect": true },
       { "text": "Diesel", "isCorrect": false },
       { "text": "Coal", "isCorrect": false }
+    ],
+    "possibleAnswers": [
+      { "id": "QQ103-ans1", "value": "Hydrogen" },
+      { "id": "QQ103-ans2", "value": "Diesel" },
+      { "id": "QQ103-ans3", "value": "Coal" }
     ]
   },
   {
@@ -45,6 +59,11 @@
       { "text": "Increase thrust", "isCorrect": true },
       { "text": "Decrease velocity", "isCorrect": false },
       { "text": "Store fuel", "isCorrect": false }
+    ],
+    "possibleAnswers": [
+      { "id": "QQ104-ans1", "value": "Increase thrust" },
+      { "id": "QQ104-ans2", "value": "Decrease velocity" },
+      { "id": "QQ104-ans3", "value": "Store fuel" }
     ]
   },
   {
@@ -54,7 +73,11 @@
     "points": 4,
     "questionText": "Higher airspeed reduces pressure over an airfoil.",
     "questionType": "true-false",
-    "correctAnswer": true
+    "correctAnswer": true,
+    "possibleAnswers": [
+      { "id": "QQ105-ans1", "value": "True" },
+      { "id": "QQ105-ans2", "value": "False" }
+    ]
   },
   {
     "_id": "QQ106",
@@ -67,6 +90,11 @@
       { "text": "Bernoulli's Equation", "isCorrect": true },
       { "text": "Newton's Law", "isCorrect": false },
       { "text": "Euler's Formula", "isCorrect": false }
+    ],
+    "possibleAnswers": [
+      { "id": "QQ106-ans1", "value": "Bernoulli's Equation" },
+      { "id": "QQ106-ans2", "value": "Newton's Law" },
+      { "id": "QQ106-ans3", "value": "Euler's Formula" }
     ]
   },
   {
@@ -76,7 +104,11 @@
     "points": 5,
     "questionText": "Conduction is the primary mode of heat transfer in a vacuum.",
     "questionType": "true-false",
-    "correctAnswer": false
+    "correctAnswer": false,
+    "possibleAnswers": [
+      { "id": "QQ107-ans1", "value": "True" },
+      { "id": "QQ107-ans2", "value": "False" }
+    ]
   },
   {
     "_id": "QQ108",
@@ -89,6 +121,11 @@
       { "text": "Elasticity", "isCorrect": true },
       { "text": "Density", "isCorrect": false },
       { "text": "Mass", "isCorrect": false }
+    ],
+    "possibleAnswers": [
+      { "id": "QQ108-ans1", "value": "Elasticity" },
+      { "id": "QQ108-ans2", "value": "Density" },
+      { "id": "QQ108-ans3", "value": "Mass" }
     ]
   },
   {
@@ -102,6 +139,11 @@
       { "text": "7.8 km/s", "isCorrect": true },
       { "text": "9.8 km/s", "isCorrect": false },
       { "text": "11.2 km/s", "isCorrect": false }
+    ],
+    "possibleAnswers": [
+      { "id": "QQ109-ans1", "value": "7.8 km/s" },
+      { "id": "QQ109-ans2", "value": "9.8 km/s" },
+      { "id": "QQ109-ans3", "value": "11.2 km/s" }
     ]
   },
   {
@@ -111,7 +153,11 @@
     "points": 8,
     "questionText": "Systems engineering focuses on integrating different components into a functional whole.",
     "questionType": "true-false",
-    "correctAnswer": true
+    "correctAnswer": true,
+    "possibleAnswers": [
+      { "id": "QQ110-ans1", "value": "True" },
+      { "id": "QQ110-ans2", "value": "False" }
+    ]
   },
   {
     "_id": "QQ111",
@@ -124,6 +170,11 @@
       "mdot * v + (p2 - p1) * A",
       "m. * v + (p2 - p1) * A",
       "mdot * v + A * (p2 - p1)"
+    ],
+    "possibleAnswers": [
+      { "id": "QQ111-ans1", "value": "mdot * v + (p2 - p1) * A" },
+      { "id": "QQ111-ans2", "value": "m. * v + (p2 - p1) * A" },
+      { "id": "QQ111-ans3", "value": "mdot * v + A * (p2 - p1)" }
     ]
   },
   {
@@ -133,6 +184,10 @@
     "points": 5,
     "questionText": "The first law of thermodynamics states that energy cannot be ___________",
     "questionType": "fill-in-blank",
-    "answers": ["created or destroyed", "Created Or Destroyed"]
+    "answers": ["created or destroyed", "Created Or Destroyed"],
+    "possibleAnswers": [
+      { "id": "QQ112-ans1", "value": "created or destroyed" },
+      { "id": "QQ112-ans2", "value": "Created Or Destroyed" }
+    ]
   }
 ]

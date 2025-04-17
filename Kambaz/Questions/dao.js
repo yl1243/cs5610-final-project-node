@@ -1,4 +1,5 @@
 import Question from "../Database/questions.js";
+import { v4 as uuidv4 } from "uuid";
 
 // Create a generic question (the payload should include quizId, title, points, questionText, questionType, etc.)
 export async function createQuestion(data) {
@@ -73,7 +74,38 @@ export async function getQuestionsForQuiz(quizId) {
 // Update a question by its ID
 export async function updateQuestion(questionId, data) {
   try {
-    return await Question.findByIdAndUpdate(questionId, data, { new: true });
+    // Load the existing document
+    const question = await Question.findById(questionId);
+    if (!question) {
+      return null;
+    }
+
+    // Overwrite simple fields if provided
+    const updatableFields = [
+      "title",
+      "points",
+      "questionText",
+      "questionType",
+      "choices",
+      "correctAnswer",
+      "answers",
+    ];
+    updatableFields.forEach((field) => {
+      if (data[field] !== undefined) {
+        question[field] = data[field];
+      }
+    });
+
+    // possibleAnswers array
+    if (Array.isArray(data.possibleAnswers)) {
+      question.possibleAnswers = data.possibleAnswers.map((ans) => ({
+        // reuse incoming id or generate a new one
+        id: ans.id || uuidv4(),
+        value: ans.value ?? "",
+      }));
+    }
+    await question.save();
+    return question;
   } catch (error) {
     throw new Error(`Error updating question: ${error.message}`);
   }
