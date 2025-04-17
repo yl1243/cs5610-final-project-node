@@ -1,98 +1,109 @@
-import Quiz from '../Database/quiz.js';
+import Quiz from "../Database/quizzes.js";
+import Question from "../Database/questions.js";
 
-/**
- * GET /api/quizzes
- * Fetch all quizzes from the database.
- */
-export const getAllQuizzes = async (req, res) => {
+// Create a new quiz and associate it with a course
+export async function createQuiz(courseId, data) {
   try {
-    const quizzes = await Quiz.find();
-    res.json(quizzes);
-  } catch (err) {
-    console.error('❌ Error fetching all quizzes:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-/**
- * GET /api/quizzes/:quizId
- * Retrieve quiz metadata by ID.
- * Includes title, availability, settings, etc.
- */
-export const getQuizById = async (req, res) => {
-  try {
-    const quiz = await Quiz.findOne({ _id: req.params.quizId });
-    if (!quiz) {
-      return res.status(404).json({ error: 'Quiz not found' });
-    }
-    res.json(quiz);
-  } catch (err) {
-    console.error('❌ Error fetching quiz by ID:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-/**
- * PUT /api/quizzes/:quizId
- * Update quiz metadata (e.g., title, dueDate, timeLimit).
- */
-export const updateQuiz = async (req, res) => {
-  try {
-    const updatedQuiz = await Quiz.findOneAndUpdate(
-      { _id: req.params.quizId },
-      req.body,
-      { new: true }
-    );
-    if (!updatedQuiz) {
-      return res.status(404).json({ error: 'Quiz not found' });
-    }
-    res.json(updatedQuiz);
-  } catch (err) {
-    console.error('❌ Error updating quiz:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-/**
- * PUT /api/quizzes/:quizId/publish
- * Mark the quiz as published (available to students).
- */
-export const publishQuiz = async (req, res) => {
-  try {
-    const quiz = await Quiz.findOneAndUpdate(
-      { _id: req.params.quizId },
-      { published: true },
-      { new: true }
-    );
-    if (!quiz) {
-      return res.status(404).json({ error: 'Quiz not found' });
-    }
-    res.json(quiz);
-  } catch (err) {
-    console.error('❌ Error publishing quiz:', err.message);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-/**
- * GET /api/quizzes/:quizId/preview
- * Returns quiz metadata only.
- * Placeholder for when questions are added in the future.
- */
-export const previewQuiz = async (req, res) => {
-  try {
-    const quiz = await Quiz.findOne({ _id: req.params.quizId });
-    if (!quiz) {
-      return res.status(404).json({ error: 'Quiz not found' });
-    }
-
-    // 🚧 Question model not implemented yet
-    res.json({
-      quiz,
-      questions: [] // Will populate this once Question model is ready
+    const quiz = new Quiz({
+      courseId,
+      ...data,
     });
-  } catch (err) {
-    console.error('❌ Error previewing quiz:', err.message);
-    res.status(500).json({ error: err.message });
+    await quiz.save();
+    return quiz;
+  } catch (error) {
+    throw new Error(`Error creating quiz: ${error.message}`);
   }
+}
+
+// Get a single quiz by its ID
+export async function getQuizById(quizId) {
+  try {
+    return await Quiz.findById(quizId);
+  } catch (error) {
+    throw new Error(`Error fetching quiz: ${error.message}`);
+  }
+}
+
+// Get all quizzes for a given course
+export async function getQuizzesForCourse(courseId, filter = {}) {
+  try {
+    const query = { courseId, ...filter };
+    return await Quiz.find(query);
+  } catch (error) {
+    throw new Error(`Error fetching quizzes for course: ${error.message}`);
+  }
+}
+
+// Update an existing quiz by its ID
+export async function updateQuiz(quizId, data) {
+  try {
+    return await Quiz.findByIdAndUpdate(quizId, data, { new: true });
+  } catch (error) {
+    throw new Error(`Error updating quiz: ${error.message}`);
+  }
+}
+
+// Delete a quiz by its ID
+export async function deleteQuiz(quizId) {
+  try {
+    return await Quiz.findByIdAndDelete(quizId);
+  } catch (error) {
+    throw new Error(`Error deleting quiz: ${error.message}`);
+  }
+}
+
+// Calculate total quiz points by summing the points of all its questions
+export async function calculateTotalPoints(quizId) {
+  try {
+    const questions = await Question.find({ quizId });
+    const totalPoints = questions.reduce(
+      (sum, question) => sum + (question.points || 0),
+      0
+    );
+    return totalPoints;
+  } catch (error) {
+    throw new Error(`Error calculating total points: ${error.message}`);
+  }
+}
+
+// Publish a quiz
+export async function publishQuiz(quizId) {
+  try {
+    return await Quiz.findByIdAndUpdate(quizId, { published: true }, { new: true });
+  } catch (error) {
+    throw new Error(`Error publishing quiz: ${error.message}`);
+  }
+}
+
+// Unpublish a quiz
+export async function unpublishQuiz(quizId) {
+  try {
+    return await Quiz.findByIdAndUpdate(quizId, { published: false }, { new: true });
+  } catch (error) {
+    throw new Error(`Error unpublishing quiz: ${error.message}`);
+  }
+}
+
+// Preview a quiz (returns quiz + empty questions for now)
+export async function previewQuiz(quizId) {
+  try {
+    const quiz = await Quiz.findById(quizId);
+    if (!quiz) throw new Error("Quiz not found");
+    return { quiz, questions: [] }; // Placeholder — update with real questions when ready
+  } catch (error) {
+    throw new Error(`Error previewing quiz: ${error.message}`);
+  }
+}
+
+// Export
+export default {
+  createQuiz,
+  getQuizById,
+  getQuizzesForCourse,
+  updateQuiz,
+  deleteQuiz,
+  calculateTotalPoints,
+  publishQuiz,
+  unpublishQuiz,
+  previewQuiz
 };

@@ -6,19 +6,18 @@ import {
 
 const router = express.Router();
 
-/**
- * GET /api/quiz-results/user/:userId
- * Returns all quiz results submitted by the given user.
- * - Useful for a student dashboard, transcript, or overall progress.
- */
-router.get('/user/:userId', getQuizResultsByUser);
+console.log('[QuizResults] Routes initialized');
 
-/**
- * GET /api/quiz-results/:quizId/:userId
- * Retrieves the result of a specific quiz for a specific user.
- * - Used to display final score, pass/fail, and feedback for a quiz.
- */
-router.get('/:quizId/:userId', getQuizResultByQuizAndUser);
+// Test route
+router.get('/api/quiz-results/test', (req, res) => {
+  res.send('/api/quiz-results/test is working!');
+});
 
-export default router;
+// Quiz Results Core APIs
+router.get('/api/quiz-results/user/:userId', getQuizResultsByUser);          // Get all results for a user
+router.get('/api/quiz-results/:quizId/:userId', getQuizResultByQuizAndUser); // Get specific quiz result for user
 
+// Export as a function 
+export default (app) => {
+  app.use('/api/quiz-results', router);
+};

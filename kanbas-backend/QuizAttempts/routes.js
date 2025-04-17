@@ -5,38 +5,24 @@ import {
   getQuizAttempts,
   getQuizAttemptById
 } from './dao.js';
+import { validateQuizStart, validateQuizSubmit } from '../middleware/validateRequest.js'; 
 
 const router = express.Router();
 
-console.log('✅ QuizAttempts/routes.js is being executed');
+console.log('[QuizAttempts] Routes initialized');
 
-// 🧪 Test route to confirm this module is wired up
-router.get('/test', (req, res) => {
-  res.send('✅ /api/quiz-attempts/test is working!');
+// Test route
+router.get('/api/quiz-attempts/test', (req, res) => {
+  res.send('/api/quiz-attempts/test is working!');
 });
 
-/**
- * POST /api/quiz-attempts/:quizId/start
- * Start a new attempt for a specific quiz.
- */
-router.post('/:quizId/start', startQuizAttempt);
+// Quiz Attempt Core APIs
+router.post('/api/quiz-attempts/:quizId/start', validateQuizStart, startQuizAttempt);          // Start attempt with validation
+router.post('/api/quiz-attempts/:quizId/submit', validateQuizSubmit, submitQuizAttempt);        // Submit attempt with validation
+router.get('/api/quiz-attempts/:quizId/attempts', getQuizAttempts);         // View all attempts
+router.get('/api/quiz-attempts/:quizId/attempts/:attemptId', getQuizAttemptById); // View specific attempt
 
-/**
- * POST /api/quiz-attempts/:quizId/submit
- * Submit answers for the latest quiz attempt.
- */
-router.post('/:quizId/submit', submitQuizAttempt);
-
-/**
- * GET /api/quiz-attempts/:quizId/attempts
- * View all attempts for a quiz (faculty access).
- */
-router.get('/:quizId/attempts', getQuizAttempts);
-
-/**
- * GET /api/quiz-attempts/:quizId/attempts/:attemptId
- * View a specific attempt in detail.
- */
-router.get('/:quizId/attempts/:attemptId', getQuizAttemptById);
-
-export default router;
+// Export as a function 
+export default (app) => {
+  app.use('/api/quiz-attempts', router);
+};

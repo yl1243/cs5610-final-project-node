@@ -17,7 +17,7 @@ export const getQuizResultByQuizAndUser = async (req, res) => {
 
     res.json(result);
   } catch (err) {
-    console.error('❌ Error fetching quiz result by quizId and userId:', err.message);
+    console.error('Error fetching quiz result by quizId and userId:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -32,7 +32,7 @@ export const getQuizResultsByUser = async (req, res) => {
     const results = await QuizResult.find({ userId: req.params.userId });
     res.json(results);
   } catch (err) {
-    console.error('❌ Error fetching quiz results by userId:', err.message);
+    console.error('Error fetching quiz results by userId:', err.message);
     res.status(500).json({ error: err.message });
   }
 };

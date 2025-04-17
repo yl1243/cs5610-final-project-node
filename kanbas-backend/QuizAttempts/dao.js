@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import QuizAttempt from '../Database/quiz_attempts.js';
-import Quiz from '../Database/quiz.js';
+import Quiz from '../Database/quizzes.js';
 import QuizResult from '../Database/quiz_results.js';
 
 /**
@@ -37,7 +37,7 @@ export const startQuizAttempt = async (req, res) => {
     await attempt.save();
     res.status(201).json(attempt);
   } catch (err) {
-    console.error('❌ Error starting quiz attempt:', err.message);
+    console.error('Error starting quiz attempt:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -123,7 +123,7 @@ export const submitQuizAttempt = async (req, res) => {
       result: quizResult
     });
   } catch (err) {
-    console.error('❌ Error submitting quiz attempt:', err.message);
+    console.error('Error submitting quiz attempt:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -138,7 +138,7 @@ export const getQuizAttempts = async (req, res) => {
     const attempts = await QuizAttempt.find({ quizId });
     res.json(attempts);
   } catch (err) {
-    console.error('❌ Error fetching quiz attempts:', err.message);
+    console.error('Error fetching quiz attempts:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
@@ -153,7 +153,7 @@ export const getQuizAttemptById = async (req, res) => {
     if (!attempt) return res.status(404).json({ error: 'Attempt not found' });
     res.json(attempt);
   } catch (err) {
-    console.error('❌ Error fetching quiz attempt by ID:', err.message);
+    console.error('Error fetching quiz attempt by ID:', err.message);
     res.status(500).json({ error: err.message });
   }
 };
