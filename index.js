@@ -21,6 +21,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/demo-data-final-project");
 UserRoutes(app);
 QuizRoutes(app);
 
-app.listen(4000, () => {
-    console.log("Server running on http://localhost:4000");
+app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
 });
