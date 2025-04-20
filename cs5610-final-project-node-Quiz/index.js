@@ -7,6 +7,11 @@ import quizRoutes from "./Kambaz/Quizzes/routes.js";
 import questionRoutes from "./Kambaz/Questions/routes.js";
 import quizAttemptRoutes from "./Kambaz/QuizAttempts/routes.js";
 import quizResultRoutes from "./Kambaz/QuizResults/routes.js";
+import UserRoutes from "./Kambaz/Users/routes.js";
+import ModuleRoutes from "./Kambaz/Modules/routes.js";
+import AssignmentRoutes from "./Kambaz/Assignments/routes.js";
+import EnrollmentRoutes from "./Kambaz/Enrollments/routes.js";
+import CourseRoutes from "./Kambaz/Courses/routes.js";
 
 const app = express();
 
@@ -48,6 +53,11 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
+UserRoutes(app);
+EnrollmentRoutes(app);
+CourseRoutes(app);
+ModuleRoutes(app);
+AssignmentRoutes(app);
 quizRoutes(app);
 questionRoutes(app);
 quizAttemptRoutes(app);

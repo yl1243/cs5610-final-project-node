@@ -90,20 +90,28 @@ export async function previewQuiz(quizId) {
     const quiz = await Quiz.findById(quizId);
     if (!quiz) throw new Error("Quiz not found");
 
-    const questions = await Question.find(
-      { quizId },
-      { 
-        title: 1, 
-        points: 1, 
-        questionText: 1, 
-        questionType: 1, 
-        choices: 1, 
-        acceptedAnswers: 1,
-        course: 1,
-        quiz: 1 
+    const questions = await Question.find({ quizId });
+    
+    // Log the raw questions for debugging
+    console.log("Preview questions for quiz:", quizId);
+    questions.forEach(q => {
+      console.log("Question:", q.title);
+      console.log("Type:", q.questionType);
+      if (q.questionType === "true-false") {
+        console.log("Correct Answer:", q.correctAnswer);
       }
-    );
-    return { quiz, questions };
+      if (q.questionType === "fill-in-blank" && q.title.includes("Thrust")) {
+        console.log("Answers array:", q.answers);
+        console.log("Possible answers:", q.possibleAnswers);
+        console.log("Correct answer:", q.correctAnswer);
+      }
+    });
+
+    // Return the questions with required fields
+    return { 
+      quiz, 
+      questions 
+    };
   } catch (error) {
     throw new Error(`Error previewing quiz: ${error.message}`);
   }

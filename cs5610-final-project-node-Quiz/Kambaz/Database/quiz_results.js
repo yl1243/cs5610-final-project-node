@@ -40,9 +40,7 @@ const quizResultSchema = new mongoose.Schema({
     required: true
   },
 
-  /**
-   * ✅ Detailed feedback for each question
-   */
+  //Detailed feedback for each question
   breakdown: [
     {
       questionId: {
